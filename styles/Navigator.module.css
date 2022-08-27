@@ -1,0 +1,19 @@
+.nav {
+    position: relative;
+    height: 60px;
+    border-bottom: 1px solid #afaeae;
+}
+
+.logo {
+    position: absolute;
+    left: 45%;
+    top: 20px;
+}
+
+.leftIcon {
+    position: absolute;
+    left: 8%;
+    top: 20px;
+    border: none;
+
+}
