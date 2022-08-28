@@ -1,0 +1,29 @@
+.selectLine {
+    margin: 10px 0;
+    width: 30%;
+    height: 30px;
+    font-size: 17px;
+    border: 1px solid #d9d9d9;
+    margin-left: 10px;
+}
+
+.stationCard {
+    display: flex;
+    width: 100%;
+    height: 100px;
+    justify-content: center;
+    border-top: 1px solid;
+    align-items: center;
+   
+    &:active{
+        background-color: blue;
+        color: white;
+    }
+    &:hover{
+        background-color: blue;
+        color: white;
+    }
+ 
+
+}
+

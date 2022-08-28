@@ -1,4 +1,4 @@
-export const stattionList : {id: string; name: string;}[]= [
+const stationList:{id: string; name: string;}[]= [
     {
       id: "101",
       name: "판암(대전대)",
@@ -87,5 +87,7 @@ export const stattionList : {id: string; name: string;}[]= [
       id: "122",
       name: "반석(칠성대)",
     },
-  ]
+];
+
+export default stationList;
   

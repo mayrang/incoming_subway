@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons"
-import styles from "../styles/Navigator.module.css";
+import styles from "../styles/Navigator.module.scss";
 
 const Navigator = () => {
     return (
