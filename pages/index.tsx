@@ -16,16 +16,14 @@ const Home = () => {
   const changeOrder = (e:React.ChangeEvent<HTMLSelectElement>) => {
     if(e.target.value === "start"){
       setOrderStationList([...orderStationList.sort((a, b) => parseInt(a.id) - parseInt(b.id))]);
-      console.log(1)
     }else{
       setOrderStationList([...orderStationList.sort((a, b) => parseInt(b.id) - parseInt(a.id))]);
-      console.log(2)
     }
   }
 
   return (
     <>
-    <Navigator />
+    <Navigator centerText={"Home"}/>
     <section>
       <select className={styles.selectLine} defaultValue="start" onChange={changeOrder}>
         <option value="start">판암</option>

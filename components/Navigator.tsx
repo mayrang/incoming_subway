@@ -1,13 +1,18 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faArrowLeft} from "@fortawesome/free-solid-svg-icons"
+
 import styles from "../styles/Navigator.module.scss";
 
-const Navigator = () => {
+interface NavigatorProps {
+    leftButton?: JSX.Element;
+    leftOnClick?: () => void;
+    centerText: string|undefined;
+}
+
+const Navigator = ({leftButton, leftOnClick, centerText}:NavigatorProps) => {
     return (
         <header>
             <nav className={styles.nav}>
-                <div className={styles.leftIcon}><FontAwesomeIcon icon={faArrowLeft} size="lg"/></div>
-                <div className={styles.logo}>Home</div>
+                <div className={styles.leftIcon} onClick={leftOnClick}>{leftButton}</div>
+                <div className={styles.logo}>{centerText}</div>
             </nav>
         </header>
     );
