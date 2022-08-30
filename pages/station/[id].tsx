@@ -6,12 +6,17 @@ import { useCallback } from "react";
 import stationList from "../../utils/stationList";
 import { GetStaticPaths, GetStaticProps } from "next";
 import axios from "axios";
+import makeThreeTimes from "../../api/makeThreeTimes";
+import checkHoliday from "../../api/checkHoliday";
+import moment from "moment";
 
 interface StationProps {
     stationName: string;
+    upTime: string[];
+    downTime: string[];
 }
 
-const Station = ({stationName}:StationProps) => {
+const Station = ({stationName, upTime, downTime}:StationProps) => {
     const router = useRouter();
     const id = router.query.id;
     
@@ -22,6 +27,14 @@ const Station = ({stationName}:StationProps) => {
     return (
         <div>
             <Navigator leftButton={<FontAwesomeIcon icon={faArrowLeft} size="lg"/>} leftOnClick={clickBack} centerText={stationName}/>
+            <p>상행</p>
+            {upTime.map((it:string) => (
+                <div key={it}><p>{Math.floor(moment.duration(moment(it, "HHmm").diff(moment())).asMinutes())}</p><p>{it}</p></div>
+            ))}
+            <p>하행</p>
+            {downTime.map((it:string) => (
+                <div key={it}>{it}</div>
+            ))}
         </div>
     );
 };
@@ -31,7 +44,6 @@ export default Station;
 
 export const getStaticPaths:GetStaticPaths = () => {
     const paths = stationList.map((it) =>{ return {params: {id: it.id} }});
-    console.log(paths)
     return {
         paths,
         fallback: false,
@@ -40,11 +52,22 @@ export const getStaticPaths:GetStaticPaths = () => {
 
 export const getStaticProps:GetStaticProps = async ({params}) => {
     const stationName = stationList.find((it) => it.id === params?.id)?.name;
-    const result = await axios.get(`http://www.djtc.kr/OpenAPI/service/TimeTableSVC/getTimeTable?serviceKey=${process.env.API_SERVICE_KEY}&stNum=${params?.id}&dayType=0&drctType=0`);
-    console.log(result.data.response.body.items.item);
+    const holiday = await checkHoliday();
+    let upTime:string[];
+    let downTime:string[];
+    if(moment().day()===0||moment().day()===6||holiday){
+        upTime = await makeThreeTimes("1", "0", params?.id as string);
+        downTime = await makeThreeTimes("1", "1", params?.id as string);
+    }else{
+        upTime = await makeThreeTimes("0", "0", params?.id as string);
+        downTime = await makeThreeTimes("0", "1", params?.id as string);
+    }
+   
     return {
         props: {
-            stationName
+            stationName,
+            upTime,
+            downTime,
         }
     };
 };
