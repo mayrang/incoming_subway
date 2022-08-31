@@ -1,7 +1,7 @@
 const stationList:{id: string; name: string;}[]= [
     {
       id: "101",
-      name: "판암(대전대)",
+      name: "판암\n(대전대)",
     },
     {
       id: "102",
@@ -9,7 +9,7 @@ const stationList:{id: string; name: string;}[]= [
     },
     {
       id: "103",
-      name: "대동(우송대)",
+      name: "대동\n(우송대)",
     },
     {
       id: "104",
@@ -53,7 +53,7 @@ const stationList:{id: string; name: string;}[]= [
     },
     {
       id: "114",
-      name: "월평(한국과학시술원)",
+      name: "월평\n(한국과학기술원)",
     },
     {
       id: "115",
@@ -61,7 +61,7 @@ const stationList:{id: string; name: string;}[]= [
     },
     {
       id: "116",
-      name: "유성온천(충남대, 목원대)",
+      name: "유성온천\n(충남대, 목원대)",
     },
     {
       id: "117",
@@ -69,23 +69,23 @@ const stationList:{id: string; name: string;}[]= [
     },
     {
       id: "118",
-      name: "현충원(한밭대)",
+      name: "현충원\n(한밭대)",
     },
     {
       id: "119",
-      name: "월드컵경기장(노은도매시장)",
+      name: "월드컵경기장\n(노은도매시장)",
     },
     {
       id: "120",
-      name: "지족(침신대)",
+      name: "노은",
     },
     {
       id: "121",
-      name: "지족(침신대)",
+      name: "지족\n(침신대)",
     },
     {
       id: "122",
-      name: "반석(칠성대)",
+      name: "반석\n(칠성대)",
     },
 ];
 

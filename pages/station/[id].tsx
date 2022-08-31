@@ -5,7 +5,7 @@ import {faArrowLeft} from "@fortawesome/free-solid-svg-icons"
 import { useCallback } from "react";
 import stationList from "../../utils/stationList";
 import { GetStaticPaths, GetStaticProps } from "next";
-import axios from "axios";
+import styles from "../../styles/Station.module.scss";
 import makeThreeTimes from "../../api/makeThreeTimes";
 import checkHoliday from "../../api/checkHoliday";
 import moment from "moment";
@@ -27,13 +27,16 @@ const Station = ({stationName, upTime, downTime}:StationProps) => {
     return (
         <div>
             <Navigator leftButton={<FontAwesomeIcon icon={faArrowLeft} size="lg"/>} leftOnClick={clickBack} centerText={stationName}/>
+            <div className={styles.stationName}>
+                <div className={styles.nowStation}>{"월드컵경기장\n(노은도매시장)"}</div>
+            </div>
             <p>상행</p>
             {upTime.map((it:string) => (
                 <div key={it}><p>{Math.floor(moment.duration(moment(it, "HHmm").diff(moment())).asMinutes())}</p><p>{it}</p></div>
             ))}
             <p>하행</p>
             {downTime.map((it:string) => (
-                <div key={it}>{it}</div>
+                <div key={it}><p>{Math.floor(moment.duration(moment(it, "HHmm").diff(moment())).asMinutes())}</p><p>{it}</p></div>
             ))}
         </div>
     );
