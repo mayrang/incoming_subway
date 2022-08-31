@@ -11,7 +11,7 @@ import checkHoliday from "../../api/checkHoliday";
 import moment from "moment";
 
 interface StationProps {
-    stationName: string;
+    stationName: string|undefined;
     upTime: string[];
     downTime: string[];
 }
@@ -19,6 +19,9 @@ interface StationProps {
 const Station = ({stationName, upTime, downTime}:StationProps) => {
     const router = useRouter();
     const id = router.query.id;
+    const upStation = stationList.find((it) => (parseInt(it.id)+1).toString() === id)?.name;
+    const downStation = stationList.find((it) => (parseInt(it.id)-1).toString() === id)?.name
+
     
     const clickBack = useCallback(() => {
         router.push("/");
@@ -28,15 +31,15 @@ const Station = ({stationName, upTime, downTime}:StationProps) => {
         <div>
             <Navigator leftButton={<FontAwesomeIcon icon={faArrowLeft} size="lg"/>} leftOnClick={clickBack} centerText={stationName}/>
             <div className={styles.stationName}>
-                <div className={styles.nowStation}>{"월드컵경기장\n(노은도매시장)"}</div>
+                <div className={styles.nowStation}>{stationName}</div>
             </div>
-            <p>상행</p>
+            <p>상행</p><p>{upStation}</p>
             {upTime.map((it:string) => (
-                <div key={it}><p>{Math.floor(moment.duration(moment(it, "HHmm").diff(moment())).asMinutes())}</p><p>{it}</p></div>
+                <div key={it}>{isNaN(Number(it))?it:Math.floor(moment.duration(moment(it.slice(0, 2) === "24"?it.replace("24", "00"):it, "HHmm").diff(moment())).asMinutes())}</div>
             ))}
-            <p>하행</p>
+            <p>하행</p><p>{downStation}</p>
             {downTime.map((it:string) => (
-                <div key={it}><p>{Math.floor(moment.duration(moment(it, "HHmm").diff(moment())).asMinutes())}</p><p>{it}</p></div>
+                <div key={it}>{isNaN(Number(it))?it:Math.floor(moment.duration(moment(it.slice(0, 2) === "24"?it.replace("24", "00"):it, "HHmm").diff(moment())).asMinutes())}</div>
             ))}
         </div>
     );
@@ -65,7 +68,7 @@ export const getStaticProps:GetStaticProps = async ({params}) => {
         upTime = await makeThreeTimes("0", "0", params?.id as string);
         downTime = await makeThreeTimes("0", "1", params?.id as string);
     }
-   
+    console.log(upTime, downTime)
     return {
         props: {
             stationName,
