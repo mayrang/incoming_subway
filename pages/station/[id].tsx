@@ -39,14 +39,22 @@ const Station = ({stationName, upTime, downTime}:StationProps) => {
             <div className={styles.stationName}>
                 <div className={styles.nowStation}>{stationName}</div>
             </div>
-            <p>상행</p><p>{upStation}</p>
+            <div className={styles.timeInfo}>
+                <div className={styles.upTimeInfo}>
+                    <div className={styles.stationInfo}><p style={{fontWeight:"bold"}}>상행</p><p>{upStation||""}</p></div>
+                </div>
+                <div className={styles.downTimeInfo}>
+                    <div className={styles.stationInfo}><p style={{fontWeight: "bold"}}>하행</p><p>{downStation||""}</p></div>
+                </div>
+            </div>
+            {/* <p>상행</p><p>{upStation}</p>
             {upTime.map((it:string) => (
                 <div key={it}>{isNaN(Number(it))?it:Math.floor(moment.duration(moment(it.slice(0, 2) === "24"?it.replace("24", "00"):it, "HHmm").diff(moment())).asMinutes())}</div>
             ))}
             <p>하행</p><p>{downStation}</p>
             {downTime.map((it:string) => (
                 <div key={it}>{isNaN(Number(it))?it:Math.floor(moment.duration(moment(it.slice(0, 2) === "24"?it.replace("24", "00"):it, "HHmm").diff(moment())).asMinutes())}</div>
-            ))}
+            ))} */}
         </div>
     );
 };
