@@ -9,12 +9,15 @@ import stationList from '../utils/stationList'
 const Home = () => {
   const [orderStationList, setOrderStationList] = useState(stationList);
   const router = useRouter();
+  console.log(orderStationList)
+  
 
   const clickStation = (id:string) => {
     router.push(`/station/${id}`);
   };
   const changeOrder = (e:React.ChangeEvent<HTMLSelectElement>) => {
     if(e.target.value === "start"){
+      
       setOrderStationList([...orderStationList.sort((a, b) => parseInt(a.id) - parseInt(b.id))]);
     }else{
       setOrderStationList([...orderStationList.sort((a, b) => parseInt(b.id) - parseInt(a.id))]);
@@ -24,7 +27,7 @@ const Home = () => {
   return (
     <>
     <Navigator centerText={"Home"}/>
-    <section>
+    <section className={styles.mainSection}>
       <select className={styles.selectLine} defaultValue="start" onChange={changeOrder}>
         <option value="start">판암</option>
         <option value="end">정부청사</option>

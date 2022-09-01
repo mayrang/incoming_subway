@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import Navigator from "../../components/Navigator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons"
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import stationList from "../../utils/stationList";
 import { GetStaticPaths, GetStaticProps } from "next";
 import styles from "../../styles/Station.module.scss";
@@ -21,7 +21,13 @@ const Station = ({stationName, upTime, downTime}:StationProps) => {
     const id = router.query.id;
     const upStation = stationList.find((it) => (parseInt(it.id)+1).toString() === id)?.name;
     const downStation = stationList.find((it) => (parseInt(it.id)-1).toString() === id)?.name
-
+  
+    useEffect(() => {
+        const handler = setTimeout(() => {
+        router.reload();
+        }, 60000);
+        return () => {clearTimeout(handler);};
+     }, []);
     
     const clickBack = useCallback(() => {
         router.push("/");
