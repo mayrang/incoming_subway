@@ -2,7 +2,7 @@
   "name": "incoming_subway",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://mayrang.github.id/react-netflix",
+  "homepage": "https://mayrang.github.io/react-netflix",
   "scripts": {
     "dev": "next dev",
     "start": "next start",

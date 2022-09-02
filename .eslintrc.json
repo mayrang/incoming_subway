@@ -2,8 +2,6 @@
 {   
   "extends": [
     "react-app",
-    "react-app/jest",
-    "plugin:jest-dom/recommended",
     "next/core-web-vitals"
   ]
 }
