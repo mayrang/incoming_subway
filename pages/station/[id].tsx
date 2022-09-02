@@ -71,7 +71,7 @@ export const getStaticPaths:GetStaticPaths = () => {
     const paths = stationList.map((it) =>{ return {params: {id: it.id} }});
     return {
         paths,
-        fallback: false,
+        fallback: true,
     };
 };
 
