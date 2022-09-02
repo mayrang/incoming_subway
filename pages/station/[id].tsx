@@ -3,7 +3,7 @@ import Navigator from "../../components/Navigator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons"
 import { useCallback, useEffect } from "react";
-import stationList from "../../utils/stationList";
+import {stationPaths, stationList} from "../../utils/stationList";
 import { GetStaticPaths, GetStaticProps } from "next";
 import styles from "../../styles/Station.module.scss";
 import makeThreeTimes from "../../api/makeThreeTimes";
@@ -76,7 +76,7 @@ export const getStaticPaths:GetStaticPaths = () => {
 };
 
 export const getStaticProps:GetStaticProps = async ({params}) => {
-    const stationName = stationList.find((it) => it.id === params?.id)?.name;
+    const stationName = stationPaths(params);
     const holiday = await checkHoliday();
     let upTime:string[];
     let downTime:string[];

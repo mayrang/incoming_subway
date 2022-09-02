@@ -1,4 +1,4 @@
-const stationList:{id: string; name: string;}[]= [
+export const stationList:{id: string; name: string;}[]= [
     {
       id: "101",
       name: "판암\n(대전대)",
@@ -89,5 +89,6 @@ const stationList:{id: string; name: string;}[]= [
     },
 ];
 
-export default stationList;
-  
+export const stationPaths = (params:any) => {
+  return stationList.find((it) => it.id === params?.id)?.name;
+}

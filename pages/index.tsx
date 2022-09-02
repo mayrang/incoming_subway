@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import Navigator from '../components/Navigator'
 import styles from '../styles/Home.module.scss'
-import stationList from '../utils/stationList'
+import {stationList} from '../utils/stationList'
 
 
 const Home = () => {
