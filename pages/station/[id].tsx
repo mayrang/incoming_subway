@@ -3,8 +3,8 @@ import Navigator from "../../components/Navigator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons"
 import { useCallback, useEffect } from "react";
-import {stationPaths, stationList} from "../../utils/stationList";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { stationList} from "../../utils/stationList";
+import { GetServerSideProps} from "next";
 import styles from "../../styles/Station.module.scss";
 import makeThreeTimes from "../../api/makeThreeTimes";
 import checkHoliday from "../../api/checkHoliday";
@@ -67,15 +67,15 @@ const Station = (props:StationProps) => {
 export default Station;
 
 
-export const getStaticPaths:GetStaticPaths = () => {
-    const paths = stationPaths();
-    return {
-        paths,
-        fallback: true,
-    };
-};
+// export const getStaticPaths:GetStaticPaths = () => {
+//     const paths = stationPaths();
+//     return {
+//         paths,
+//         fallback: true,
+//     };
+// };
 
-export const getStaticProps:GetStaticProps = async ({params}) => {
+export const getServerSideProps:GetServerSideProps = async ({params}) => {
     const stationName = stationList.find((it) => it.id === params?.id)?.name;
     const holiday = await checkHoliday();
     let upTime:string[];

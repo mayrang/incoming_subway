@@ -90,5 +90,29 @@ export const stationList:{id: string; name: string;}[]= [
 ];
 
 export const stationPaths = () => {
-  return stationList.map((it) =>{ return {params: {id: it.id} }});
+
+  return [
+    {params: {id: "101"}},
+    {params: {id: "102"}},
+    {params: {id: "103"}},
+    {params: {id: "104"}},
+    {params: {id: "105"}},
+    {params: {id: "106"}},
+    {params: {id: "107"}},
+    {params: {id: "108"}},
+    {params: {id: "109"}},
+    {params: {id: "110"}},
+    {params: {id: "111"}},
+    {params: {id: "112"}},
+    {params: {id: "113"}},
+    {params: {id: "114"}},
+    {params: {id: "115"}},
+    {params: {id: "116"}},
+    {params: {id: "117"}},
+    {params: {id: "118"}},
+    {params: {id: "119"}},
+    {params: {id: "120"}},
+    {params: {id: "121"}},
+    {params: {id: "122"}},
+  ];
 }
