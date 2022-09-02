@@ -68,7 +68,7 @@ export default Station;
 
 
 export const getStaticPaths:GetStaticPaths = () => {
-    const paths = stationList.map((it) =>{ return {params: {id: it.id} }});
+    const paths = stationPaths();
     return {
         paths,
         fallback: true,
@@ -76,7 +76,7 @@ export const getStaticPaths:GetStaticPaths = () => {
 };
 
 export const getStaticProps:GetStaticProps = async ({params}) => {
-    const stationName = stationPaths(params);
+    const stationName = stationList.find((it) => it.id === params?.id)?.name;
     const holiday = await checkHoliday();
     let upTime:string[];
     let downTime:string[];

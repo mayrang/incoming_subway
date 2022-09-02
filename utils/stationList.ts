@@ -89,6 +89,6 @@ export const stationList:{id: string; name: string;}[]= [
     },
 ];
 
-export const stationPaths = (params:any) => {
-  return stationList.find((it) => it.id === params?.id)?.name;
+export const stationPaths = () => {
+  return stationList.map((it) =>{ return {params: {id: it.id} }});
 }
