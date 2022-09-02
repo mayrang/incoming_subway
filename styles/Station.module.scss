@@ -38,5 +38,20 @@
 .stationInfo {
     white-space: pre-line;
     text-align: center;
-    padding-top: 20px;
+    padding: 30px 0px;
+    border-bottom: 1px solid;
+    font-size: 1.2rem;
+}
+
+.timeCard {
+    text-align: center;
+    padding: 40px 0px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-top: 1px solid gray;
+}
+
+.timeCard .timeCardGray {
+    color: gray;
+    font-weight: lighter;
 }

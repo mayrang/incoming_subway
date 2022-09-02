@@ -14,13 +14,13 @@ interface StationProps {
     stationName: string|undefined;
     upTime: string[];
     downTime: string[];
+    upStation: string|undefined;
+    downStation: string|undefined
 }
 
-const Station = ({stationName, upTime, downTime}:StationProps) => {
+const Station = ({stationName, upTime, downTime, upStation, downStation}:StationProps) => {
     const router = useRouter();
-    const id = router.query.id;
-    const upStation = stationList.find((it) => (parseInt(it.id)+1).toString() === id)?.name;
-    const downStation = stationList.find((it) => (parseInt(it.id)-1).toString() === id)?.name
+   
   
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -42,19 +42,23 @@ const Station = ({stationName, upTime, downTime}:StationProps) => {
             <div className={styles.timeInfo}>
                 <div className={styles.upTimeInfo}>
                     <div className={styles.stationInfo}><p style={{fontWeight:"bold"}}>상행</p><p>{upStation||""}</p></div>
+                    {upTime.map((it:string) => (
+                        <div key={it} className={styles.timeCard}>
+                            <div>{`${isNaN(Number(it))?it:Math.floor(moment.duration(moment(it.slice(0, 2) === "24"?it.replace("24", "00"):it, "HHmm").diff(moment())).asMinutes())}분 뒤 도착`}</div>
+                            <div className={styles.timeCardGray}>{`${it.slice(0, 2)}:${it.slice(2, 4)}`}</div>
+                        </div>
+                    ))}
                 </div>
                 <div className={styles.downTimeInfo}>
                     <div className={styles.stationInfo}><p style={{fontWeight: "bold"}}>하행</p><p>{downStation||""}</p></div>
+                    {downTime.map((it:string) => (
+                        <div key={it} className={styles.timeCard}>
+                            <div>{`${isNaN(Number(it))?it:Math.floor(moment.duration(moment(it.slice(0, 2) === "24"?it.replace("24", "00"):it, "HHmm").diff(moment())).asMinutes())}분 뒤 도착`}</div>
+                            <div className={styles.timeCardGray}>{`${it.slice(0, 2)}:${it.slice(2, 4)}`}</div>
+                        </div>
+                    ))}
                 </div>
             </div>
-            {/* <p>상행</p><p>{upStation}</p>
-            {upTime.map((it:string) => (
-                <div key={it}>{isNaN(Number(it))?it:Math.floor(moment.duration(moment(it.slice(0, 2) === "24"?it.replace("24", "00"):it, "HHmm").diff(moment())).asMinutes())}</div>
-            ))}
-            <p>하행</p><p>{downStation}</p>
-            {downTime.map((it:string) => (
-                <div key={it}>{isNaN(Number(it))?it:Math.floor(moment.duration(moment(it.slice(0, 2) === "24"?it.replace("24", "00"):it, "HHmm").diff(moment())).asMinutes())}</div>
-            ))} */}
         </div>
     );
 };
@@ -82,12 +86,15 @@ export const getStaticProps:GetStaticProps = async ({params}) => {
         upTime = await makeThreeTimes("0", "0", params?.id as string);
         downTime = await makeThreeTimes("0", "1", params?.id as string);
     }
-    console.log(upTime, downTime)
+    const upStation = stationList.find((it) => (parseInt(it.id)+1).toString() === params?.id)?.name;
+    const downStation = stationList.find((it) => (parseInt(it.id)-1).toString() === params?.id)?.name
     return {
         props: {
             stationName,
             upTime,
             downTime,
+            upStation,
+            downStation,
         }
     };
 };
