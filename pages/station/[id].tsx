@@ -14,13 +14,14 @@ interface StationProps {
     stationName: string|undefined;
     upTime: string[];
     downTime: string[];
-    upStation: string|undefined;
-    downStation: string|undefined
+
 }
 
-const Station = ({stationName, upTime, downTime, upStation, downStation}:StationProps) => {
+const Station = ({stationName, upTime, downTime}:StationProps) => {
     const router = useRouter();
-   
+    const id = router.query?.id;
+    const upStation = stationList.find((it) => (parseInt(it.id)+1).toString() ===id)?.name;
+    const downStation = stationList.find((it) => (parseInt(it.id)-1).toString() === id)?.name;
   
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -86,15 +87,12 @@ export const getStaticProps:GetStaticProps = async ({params}) => {
         upTime = await makeThreeTimes("0", "0", params?.id as string);
         downTime = await makeThreeTimes("0", "1", params?.id as string);
     }
-    const upStation = stationList.find((it) => (parseInt(it.id)+1).toString() === params?.id)?.name;
-    const downStation = stationList.find((it) => (parseInt(it.id)-1).toString() === params?.id)?.name
+   
     return {
         props: {
             stationName,
             upTime,
             downTime,
-            upStation,
-            downStation,
         }
     };
 };
