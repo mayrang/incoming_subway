@@ -75,21 +75,19 @@ export const getStaticPaths:GetStaticPaths = () => {
     };
 };
 
-export const getStaticProps:GetStaticProps = async ({params}) => {
+export const getServerSideProps:GetServerSideProps = async ({params}) => {
     try{
         const stationName = stationList.find((it) => it.id === params?.id)?.name;
         const holiday = await checkHoliday();
         let upTime:string[];
         let downTime:string[];
-  
+        // upTime = ["1100", '1110', '1120']
         // downTime = ["1100", '1110', '1120']
         if(moment().day()===0||moment().day()===6||holiday){
-            upTime = ["1100", '1110', '1120']
-            //upTime = await makeThreeTimes("1", "0", params?.id as string);
+            upTime = await makeThreeTimes("1", "0", params?.id as string);
             downTime = await makeThreeTimes("1", "1", params?.id as string);
         }else{
-            upTime = ["1100", '1110', '1120']
-            //upTime = await makeThreeTimes("0", "0", params?.id as string);
+            upTime = await makeThreeTimes("0", "0", params?.id as string);
             downTime = await makeThreeTimes("0", "1", params?.id as string);
         }
         
