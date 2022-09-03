@@ -67,13 +67,13 @@ const Station = (props:StationProps) => {
 export default Station;
 
 
-export const getStaticPaths:GetStaticPaths = () => {
-    const paths = stationPaths();
-    return {
-        paths,
-        fallback: false,
-    };
-};
+// export const getStaticPaths:GetStaticPaths = () => {
+//     const paths = stationPaths();
+//     return {
+//         paths,
+//         fallback: false,
+//     };
+// };
 
 export const getServerSideProps:GetServerSideProps = async ({params}) => {
     try{
