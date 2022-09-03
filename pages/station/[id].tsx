@@ -3,8 +3,8 @@ import Navigator from "../../components/Navigator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons"
 import { useCallback, useEffect } from "react";
-import { stationList} from "../../utils/stationList";
-import { GetServerSideProps} from "next";
+import { stationList, stationPaths} from "../../utils/stationList";
+import { GetServerSideProps, GetStaticPaths, GetStaticProps} from "next";
 import styles from "../../styles/Station.module.scss";
 import makeThreeTimes from "../../api/makeThreeTimes";
 import checkHoliday from "../../api/checkHoliday";
@@ -23,12 +23,12 @@ const Station = (props:StationProps) => {
     const upStation = stationList.find((it) => (parseInt(it.id)+1).toString() ===id)?.name;
     const downStation = stationList.find((it) => (parseInt(it.id)-1).toString() === id)?.name;
   
-    useEffect(() => {
-        const handler = setTimeout(() => {
-        router.reload();
-        }, 60000);
-        return () => {clearTimeout(handler);};
-     }, []);
+    // useEffect(() => {
+    //     const handler = setTimeout(() => {
+    //     router.reload();
+    //     }, 60000);
+    //     return () => {clearTimeout(handler);};
+    //  }, []);
     
     const clickBack = useCallback(() => {
         router.push("/");
@@ -67,34 +67,46 @@ const Station = (props:StationProps) => {
 export default Station;
 
 
-// export const getStaticPaths:GetStaticPaths = () => {
-//     const paths = stationPaths();
-//     return {
-//         paths,
-//         fallback: true,
-//     };
-// };
-
-export const getServerSideProps:GetServerSideProps = async ({params}) => {
-    const stationName = stationList.find((it) => it.id === params?.id)?.name;
-    const holiday = await checkHoliday();
-    let upTime:string[];
-    let downTime:string[];
-    if(moment().day()===0||moment().day()===6||holiday){
-        upTime = await makeThreeTimes("1", "0", params?.id as string);
-        downTime = await makeThreeTimes("1", "1", params?.id as string);
-    }else{
-        upTime = await makeThreeTimes("0", "0", params?.id as string);
-        downTime = await makeThreeTimes("0", "1", params?.id as string);
-    }
-   
+export const getStaticPaths:GetStaticPaths = () => {
+    const paths = stationPaths();
     return {
-        props: {
-            stationName,
-            upTime,
-            downTime,
-        }
+        paths,
+        fallback: false,
     };
+};
+
+export const getStaticProps:GetStaticProps = async ({params}) => {
+    try{
+        const stationName = stationList.find((it) => it.id === params?.id)?.name;
+        const holiday = await checkHoliday();
+        let upTime:string[];
+        let downTime:string[];
+        // upTime = ["1100", '1110', '1120']
+        // downTime = ["1100", '1110', '1120']
+        if(moment().day()===0||moment().day()===6||holiday){
+            upTime = await makeThreeTimes("1", "0", params?.id as string);
+            downTime = await makeThreeTimes("1", "1", params?.id as string);
+        }else{
+            upTime = await makeThreeTimes("0", "0", params?.id as string);
+            downTime = await makeThreeTimes("0", "1", params?.id as string);
+        }
+        
+        return {
+            props: {
+                stationName,
+                upTime,
+                downTime,
+            }
+        };
+    }catch(err){
+        console.log(err)
+        return {
+            notFound: true
+        }
+    }
+    
+
+   
 };
 
 

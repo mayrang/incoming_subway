@@ -1,5 +1,6 @@
-import axios from "axios";
+import axios from "./axiosInstance";
 import moment from "moment";
+import https from "https";
 
 interface initDataType {
     dayType: number;
@@ -9,9 +10,13 @@ interface initDataType {
     tmZone: number
 }
 
+const httpsAgent = new https.Agent({ rejectUnauthorized: false, keepAlive: true });
+
 
 const makeThreeTimes = async (dayType:string, drctType:string, stNum:string) => {
-    const result = await axios.get(`http://www.djtc.kr/OpenAPI/service/TimeTableSVC/getTimeTable?serviceKey=${process.env.TRAIN_API_SERVICE_KEY}&stNum=${stNum}&dayType=${dayType}`);
+    const result = await axios.get(`http://www.djtc.kr/OpenAPI/service/TimeTableSVC/getTimeTable?serviceKey=${process.env.TRAIN_API_SERVICE_KEY}&stNum=${stNum}&dayType=${dayType}`, {
+        httpsAgent,
+    });
     let initData = result.data.response.body.items.item
     if(drctType === "0"){
         initData = initData.filter((it:initDataType) => it.drctType === 0);
