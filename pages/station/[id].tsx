@@ -79,25 +79,33 @@ export const getStaticProps:GetStaticProps = async ({params}) => {
     try{
         const stationName = stationList.find((it) => it.id === params?.id)?.name;
         const holiday = await checkHoliday();
-        let upTime:string[];
-        let downTime:string[];
-        // upTime = ["1100", '1110', '1120']
+
+        
         // downTime = ["1100", '1110', '1120']
         if(moment().day()===0||moment().day()===6||holiday){
-            upTime = await makeThreeTimes("1", "0", params?.id as string);
-            downTime = await makeThreeTimes("1", "1", params?.id as string);
+            //upTime = await makeThreeTimes("1", "0", params?.id as string);
+            const {upTime, downTime} = await makeThreeTimes("1",  params?.id as string);
+            return {
+                props: {
+                    stationName,
+                    upTime,
+                    downTime,
+                }
+            };
         }else{
-            upTime = await makeThreeTimes("0", "0", params?.id as string);
-            downTime = await makeThreeTimes("0", "1", params?.id as string);
+            //upTime = ["1100", '1110', '1120']
+            //upTime = await makeThreeTimes("0", "0", params?.id as string);
+            const {upTime, downTime} = await makeThreeTimes("0", params?.id as string);
+            return {
+                props: {
+                    stationName,
+                    upTime,
+                    downTime,
+                }
+            };
         }
         
-        return {
-            props: {
-                stationName,
-                upTime,
-                downTime,
-            }
-        };
+       
     }catch(err){
         return {
             notFound: true
