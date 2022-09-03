@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
+  poweredByHeader: process.env.NODE_ENV === 'development',
+  reactStrictMode: process.env.NODE_ENV === 'development',
 
 }
 

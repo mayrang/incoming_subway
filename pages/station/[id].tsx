@@ -81,13 +81,15 @@ export const getStaticProps:GetStaticProps = async ({params}) => {
         const holiday = await checkHoliday();
         let upTime:string[];
         let downTime:string[];
-        // upTime = ["1100", '1110', '1120']
+  
         // downTime = ["1100", '1110', '1120']
         if(moment().day()===0||moment().day()===6||holiday){
-            upTime = await makeThreeTimes("1", "0", params?.id as string);
+            upTime = ["1100", '1110', '1120']
+            //upTime = await makeThreeTimes("1", "0", params?.id as string);
             downTime = await makeThreeTimes("1", "1", params?.id as string);
         }else{
-            upTime = await makeThreeTimes("0", "0", params?.id as string);
+            upTime = ["1100", '1110', '1120']
+            //upTime = await makeThreeTimes("0", "0", params?.id as string);
             downTime = await makeThreeTimes("0", "1", params?.id as string);
         }
         
@@ -99,7 +101,6 @@ export const getStaticProps:GetStaticProps = async ({params}) => {
             }
         };
     }catch(err){
-        console.log(err)
         return {
             notFound: true
         }
