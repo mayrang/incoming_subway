@@ -67,15 +67,15 @@ const Station = (props:StationProps) => {
 export default Station;
 
 
-// export const getStaticPaths:GetStaticPaths = () => {
-//     const paths = stationPaths();
-//     return {
-//         paths,
-//         fallback: false,
-//     };
-// };
+export const getStaticPaths:GetStaticPaths = () => {
+    const paths = stationPaths();
+    return {
+        paths,
+        fallback: false,
+    };
+};
 
-export const getServerSideProps:GetServerSideProps = async ({params}) => {
+export const getStaticProps:GetStaticProps = async ({params}) => {
     try{
         const stationName = stationList.find((it) => it.id === params?.id)?.name;
         const holiday = await checkHoliday();

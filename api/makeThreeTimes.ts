@@ -10,7 +10,7 @@ interface initDataType {
     tmZone: number
 }
 
-const httpsAgent = new https.Agent({ rejectUnauthorized: false, keepAlive: true });
+const httpsAgent = new https.Agent({ keepAlive: true });
 
 
 const makeThreeTimes = async (dayType:string, drctType:string, stNum:string) => {
